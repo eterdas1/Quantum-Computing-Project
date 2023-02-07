@@ -1,6 +1,6 @@
 
 import numpy as np
-def Hadamard_Gate(qubitCoeffs):
+def Hadamard_Gate(q):
     #Function takes in an array containing the coefficients associated with a qubit
 
     
@@ -8,14 +8,13 @@ def Hadamard_Gate(qubitCoeffs):
     H = (1/np.sqrt(2)) * np.array([1,1,1,-1]).reshape(2,2)
 
     #multiply the input array with the Hadamard gate using matmul function
-    prod = np.matmul(H, qubitCoeffs)
+    prod = np.matmul(H, q)
 
     return prod
     
-def Phase_Gate(qubitCoeffs):
-    phase = np.array([[1,0],[0, 0+1j]])
-
-    return np.matmul(phase,qubitCoeffs)
+def phase_Gate(q,phi):
+    phase = np.array([[1,0],[0, np.exp(phi * 1j)]])
+    return np.matmul(phase,q)
 
 
 
