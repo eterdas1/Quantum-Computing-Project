@@ -19,6 +19,8 @@ def Sparse_Converter(mat):
         for j in range(n):
             if mat[i][j] != 0:
                 col.append((j, mat[i][j]))
+                
+        sparse[i] = col        
 
     return(sparse)
     
