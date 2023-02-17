@@ -12,9 +12,11 @@ num_qubits = 3
 num_iterations = int(np.pi/4 * np.sqrt(2**num_qubits)) # Calculates the number of iterations
 target_in = 1  # Index grover is searching for
 
-state = np.array([1, 0, 0, 0, 0, 0, 0, 0]) #inital state of the system
+state = np.zeros((2**num_qubits)) # Creates the inital state
+state[0] = 1
 
-result = Hadmard_product(A, 3) # Does Tensor product between 3 Hadmards
+
+result = Hadmard_product(A, num_qubits) # Does Tensor product between 3 Hadmards
 state = np.matmul(state,result) # Applies Hadmard to all qubits in our state
 
 
