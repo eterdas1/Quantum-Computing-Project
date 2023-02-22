@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def Hadmard_product(A, n): # Tensor products between Hadmards
+def Hadmard_product(A, n): # Tensor products between Hadmard gates
     result = np.array([[1]])
     for i in range(n):
         result = np.kron(result, A)
