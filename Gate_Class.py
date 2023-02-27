@@ -16,5 +16,16 @@ def phase_Gate(q,phi):
     phase = np.array([[1,0],[0, np.exp(phi * 1j)]])
     return np.matmul(phase,q)
 
-
+def cnot_Gate(cstate, tstate):
+    c = np.array([1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,]).reshape(4,4)
+    print(c)
+    if cstate == 0 & tstate == 0:
+        q = np.array([1,0,0,0]).reshape(1,4)
+    if cstate == 0 & tstate == 1:
+        q = np.array([0,1,0,0]).reshape(1,4)
+    if cstate == 1 & tstate == 0:
+        q = np.array([0,0,1,0]).reshape(1,4)
+    if cstate == 1 & tstate == 1:
+        q = np.array([0,0,0,1]).reshape(1,4)
+    return np.matmul(c, q)
 
