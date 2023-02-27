@@ -1,6 +1,7 @@
 import numpy as np
-
-
+from Tensor_Product.py import tensor_product
+from Gate_Class.py import Phase_Gate
+from Gate_Class.py import cnot_Gate
 def Hadmard_product(A, n): # Tensor products between Hadmard gates
     result = np.array([[1]])
     for i in range(n):
@@ -28,7 +29,18 @@ def oracle(state, target): # Oracle function flips the sign of the element we're
 
 
 diff = np.full((2**num_qubits, 2**num_qubits), 2/(2**num_qubits)) - np.eye(2**num_qubits) # Creates the diffuser matrix
+def diffuser(state):
+    state = tensor_product(A,state) #Inital Hadamard gate
 
+    state = tensor_product(Phase_Gate(state,np.pi),state) #Z-gate
+
+    state = tensor_product(A,state) #Controlled-Z gate (CNOT gate with H either side)
+    #state = tensor_product(cnot_Gate(),state)
+    state = tensor_product(A,state)
+
+    state = tensor_product(A,state) #Final Hadamard
+
+    return state
 
 for i in range(num_iterations):
     for index in range(2**num_qubits): # Number of outputs

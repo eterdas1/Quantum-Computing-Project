@@ -12,7 +12,7 @@ def Hadamard_Gate(q):
 
     return prod
     
-def phase_Gate(q,phi):
+def Phase_Gate(q,phi):
     phase = np.array([[1,0],[0, np.exp(phi * 1j)]])
     return np.matmul(phase,q)
 
@@ -20,4 +20,6 @@ def cnot_Gate(cstate, tstate):
     c = np.array([1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,]).reshape(4,4)
     print(c)
     return np.matmul(c, q)
+
+
 
