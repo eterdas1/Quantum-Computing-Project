@@ -1,12 +1,7 @@
 import numpy as np
 
-a = np.zeros((3,4))
-a[0,0] = 1
 
-a[2,1] = 2
-a[2,3] = 2
 
-print(a)
 
 
 
@@ -31,9 +26,6 @@ def Matrix_to_Sparse(a):
 
 
 
-sp = Matrix_to_Sparse(a)
 
-
-print(sp)
 
             

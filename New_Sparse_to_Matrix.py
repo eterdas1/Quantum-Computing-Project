@@ -5,15 +5,22 @@ import numpy as np
 
 def Sparse_to_matrix(a):
     "Converts matrices in our sparse form back into a normal numpy array"
+    
+    vals = np.array(a[0])
+    rows = np.array(a[1])
+    cols = np.array(a[2])
 
-    num_rows = a.shape[0]
-    num_cols = a.shape[1]
-    b = np.zeros((3,4))
+    
+    
+    
+    b = np.zeros(a[3])
+   
 
-    for j in range(num_cols):
-        row = int(a[1,j])
-        col = int(a[2,j])
+    for j in range(len(cols)):
         
-        b[row ,col] = a[0,j]
+        row = rows[j]
+        col = cols[j]
+        
+        b[row ,col] = vals[j]
 
     return b
