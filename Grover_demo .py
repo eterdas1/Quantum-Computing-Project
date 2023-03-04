@@ -46,4 +46,4 @@ def grover(N, target):
     return i,M,np.argmax(np.abs(state)),max(state*state),result
    
    
-   grover(7,5)
+grover(7,5)
