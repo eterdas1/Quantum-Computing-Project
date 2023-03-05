@@ -32,7 +32,7 @@ def cNOT(control, target, N):
     #insert outer product of |0> into 1st term
     term1[control] = np.array([1,0,0,0]).reshape(2,2)
     
-    #insert outer product oif |1> and X matrix into 2nd term
+    #insert outer product of |1> and X matrix into 2nd term
     term2[control], term2[target] = np.array([0,0,0,1]).reshape(2,2), np.array([0,1,1,0]).reshape(2,2)
     
     #take tensor products of the terms' components seperately to make 2 matrices
