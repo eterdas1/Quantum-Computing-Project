@@ -3,7 +3,7 @@
 
 This code is for acting a cNOT gate on qubits that are not adjacent to eachother.
 
-Function takes control and target qubit indices (0,1,2,..,N) and N the number of qubits.
+Function takes control and target qubit indices (0,1,2,..,N-1) and N the number of qubits.
 It returns a 2^N square matrix.
 
 The cNOT is composed of the sum of 2 matrices, each made of tensor products of N 2x2 matrices.
