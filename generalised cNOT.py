@@ -44,7 +44,7 @@ def cNOT(control, target, N):
         mat2 = np.array(np.kron(mat2, term2[j+1]))
         
     matFinal = mat1 + mat2
-    print(matFinal)
+    return(matFinal)
     
 
 cNOT(0,1,2)
