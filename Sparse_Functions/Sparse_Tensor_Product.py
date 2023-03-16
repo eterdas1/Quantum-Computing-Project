@@ -13,6 +13,8 @@ b = Matrix_to_Sparse(a)
 
 
 
+
+
 def Sparse_Tensor_Product(a,b):
 
     "Does the tensor product between 2 matrices in our sparce form"
@@ -39,20 +41,14 @@ def Sparse_Tensor_Product(a,b):
         new_rows.append((a_rows[i]* b[3][0] + b_rows))
         new_cols.append((a_cols[i]* b[3][1] + b_cols))
 
-    #flat_vals = []
-    #flat_rows = []
-    #flat_cols = []
-    #for i in range(len(new_vals)):
-     #           for j in range(len(new_vals[0])):
-      #              flat_vals.append(new_vals[i][j])
-       #             flat_rows.append(new_rows[i][j])
-        #            flat_cols.append(new_cols[i][j])
-
+   
         
-    return np.array((new_vals, new_rows, new_cols, dim), dtype=object)
+    return np.array((np.concatenate(new_vals), np.concatenate(new_rows), np.concatenate(new_cols), np.array(dim)), dtype=object)
 
 
 
 tp = Sparse_Tensor_Product(b, b)
 
-print(Sparse_to_matrix(tp))
+
+
+print((tp))
