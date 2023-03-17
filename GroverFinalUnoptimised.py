@@ -200,8 +200,6 @@ class Sparse_Class:
         cols = np.array(a[2])
 
         
-        
-        
         b = np.zeros(a[3])
     
 
@@ -240,7 +238,6 @@ class Gate_Class(object):
     
         return tp
     
-    
     #the methods below make the forms of the gates and return them as numpy arrays
         
     #Hadamard Gate
@@ -268,12 +265,7 @@ class Gate_Class(object):
 
 
 """
-
-
 grover starts here
-
-
-
 """
 class Grovers_Circuit(object):
 
@@ -300,19 +292,18 @@ class Grovers_Circuit(object):
 
         #take tensor product of N hadamard gates
         H = self.gateSource.Hdmd()
-        HProduct = H
+        self.HProduct = H
         for i in range(self.N-1):
-            HProduct = self.gateSource.tensor_product(HProduct, H)
+            self.HProduct = self.gateSource.tensor_product(self.HProduct, H)
 
         #Apply the matrix to the state
-        self.state = np.matmul(self.state, HProduct)
+        self.state = np.matmul(self.state, self.HProduct)
         
         
     #method that makes the diffuser
     def diffuser(self):
 
         #pull necessary gates from gate class
-        H = self.gateSource.Hdmd()
         X = self.gateSource.X()
         MCZ = self.gateSource.MCZ()
         
@@ -324,20 +315,14 @@ class Grovers_Circuit(object):
         #make U_0
         U_0 = np.matmul(np.matmul(-1 * xProduct, MCZ), xProduct)
         
-        #make tensor products of hadamards together
-        HProduct = H
-        for i in range(self.N-1):
-            HProduct = self.gateSource.tensor_product(HProduct, H)
-            
         #make the diffuser, U_s
-        U_s = np.matmul(np.matmul(-1 * HProduct, U_0), HProduct)
+        U_s = np.matmul(np.matmul(-1 * self.HProduct, U_0), self.HProduct)
         return U_s
 
     #method that makes the diffuser with sparse methods
     def sparse_diffuser(self):
 
         #pull necessary gates from gate class
-        H = self.gateSource.Hdmd()
         X = self.gateSource.X()
         MCZ = self.gateSource.MCZ()
 
@@ -357,14 +342,9 @@ class Grovers_Circuit(object):
         
         #Convert U_0 back into dense form
         U_0 = self.sparseSource.Sparse_to_matrix(U_0)
-        
-        #make tensor products of hadamards together
-        HProduct = H
-        for i in range(self.N-1):
-            HProduct = self.gateSource.tensor_product(HProduct, H)
-            
+                    
         #make the diffuser, U_s
-        U_s = np.matmul(np.matmul(-1 * HProduct, U_0), HProduct)
+        U_s = np.matmul(np.matmul(-1 * self.HProduct, U_0), self.HProduct)
         return U_s    
 
     #Oracle function flips the sign of the element we are looking for
@@ -415,7 +395,6 @@ class Grovers_Circuit(object):
         print("Most probable state is: ", np.argmax(probabilities), "with probability: ", np.max(probabilities))
     
 
-
 """Class to run the above code"""
 class Grover_Test(object):
     def run(self, num_qubits, target, gateSource, sparseSource):
@@ -440,15 +419,6 @@ class Grover_Test(object):
         print('Time taken with Sparse: ',t2 - t1)    
 
 
-n = 12
+n = 8
 test = Grover_Test().run(n, 4, Gate_Class(n), Sparse_Class)
 test = Grover_Test().run_sparse(n, 4, Gate_Class(n), Sparse_Class)
-
-
-
-
-
-
-
-
-
