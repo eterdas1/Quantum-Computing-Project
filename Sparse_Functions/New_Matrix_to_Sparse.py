@@ -22,7 +22,7 @@ def Matrix_to_Sparse(a):
                 values.append(a[i,j])
                 columns.append(j)
                 rows.append(i)
-    return np.array((values, rows, columns, a.shape), dtype=object)
+    return np.array((np.array(values), np.array(rows), np.array(columns), np.array(a.shape)), dtype=object)
 
 
 

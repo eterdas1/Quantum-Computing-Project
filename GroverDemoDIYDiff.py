@@ -1,6 +1,7 @@
 """I have edited this compared to the github version by adding the diffuser function that makes the diffuser from scratch  """
 
 import numpy as np
+import time
 
 
 def Hadmard_product(A, n): # Tensor products between Hadmards
@@ -8,9 +9,9 @@ def Hadmard_product(A, n): # Tensor products between Hadmards
     for i in range(n):
         result = np.kron(result, A)
     return result
-
+t1 = time.time()
 A = (1 / np.sqrt(2)) *np.array([[1, 1], [1, -1]]) # Defines the Hadamard
-num_qubits = 4
+num_qubits = 13
 num_iterations = int(np.pi/4 * np.sqrt(2**num_qubits)) # Calculates the number of iterations
 target_in = 4  # Index grover is searching for
 
@@ -39,8 +40,8 @@ def diffuser(n):
     
     #make U naught
     U_0 = np.matmul(np.matmul(-1 * xProduct, MCZ), xProduct)
- 
-
+    
+    
     #make tensor products of hadamards together
     
     HProduct = 1/np.sqrt(2) * H
@@ -71,3 +72,6 @@ for i in range(num_iterations):
 
 
 print(state*state) # Prints the probability of each state
+
+t2 = time.time()
+print(t2-t1)
