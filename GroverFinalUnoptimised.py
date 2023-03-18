@@ -373,6 +373,7 @@ class Grovers_Circuit(object):
         probabilities = self.state*self.state
         print(probabilities) 
         print("Most probable state is: ", np.argmax(probabilities), "with probability: ", np.max(probabilities))
+        plt.bar(np.arange(2**self.N), probabilities)
         plt.ylabel('Probability of Measuring the State')
         plt.xlabel('The State')
         plt.show()
@@ -401,6 +402,49 @@ class Grovers_Circuit(object):
         plt.ylabel('Probability of Measuring the State')
         plt.xlabel('The State')
         plt.show()
+
+    #method that runs Grover's Algorithm with sparse and graphs the vector
+    def graph_circuit(self):
+
+        #lists that store the values for plotting
+       
+        y_vals = []
+        
+    
+        #put initial state into superposition
+        self.superposition()
+
+        #y_vals.append(self.state[self.target])
+        #x_vals.append((1 - (self.state[self.target])**2)**0.5)
+
+        
+        #create diffuser using diffuser method
+        diff = self.sparse_diffuser()
+        
+        #perform grover's algorithm for the required number of iterations. (Apply oracle then diffuser)
+        for i in range(self.num_iterations):
+            print(self.state)
+            
+            self.oracle()
+
+            
+            
+            
+            self.state = np.matmul(diff, self.state) 
+
+            y_vals.append((self.state[self.target])**2)
+           
+            
+        
+        #calculate probabilities of each state
+        probabilities = self.state*self.state
+        print(probabilities) 
+        print("Most probable state is: ", np.argmax(probabilities), "with probability: ", np.max(probabilities))
+        plt.scatter( np.arange(self.num_iterations),y_vals)
+        plt.ylabel('Probability of Measuring the Target State')
+        plt.xlabel('Number of Iterations')
+        plt.show()
+          
     
 
 """Class to run the above code"""
@@ -427,7 +471,18 @@ class Grover_Test(object):
         print('Time taken with Sparse: ',t2 - t1)    
 
 
-n = 4
-#test = Grover_Test().run(n, 4, Gate_Class(n), Sparse_Class)
-test = Grover_Test().run_sparse(n, 4, Gate_Class(n), Sparse_Class)
+    def run_graph(self, num_qubits, target, gateSource, sparseSource):
+
+        g = Grovers_Circuit(num_qubits, target, gateSource, sparseSource)
+        t1 = time.time()
+        g.graph_circuit()
+        t2 = time.time()
+        
+
+        print('Time taken with Sparse: ',t2 - t1)      
+
+
+n = 10
+test = Grover_Test().run(n, 4, Gate_Class(n), Sparse_Class)
+#test = Grover_Test().run_graph(n, 4, Gate_Class(n), Sparse_Class)
 
