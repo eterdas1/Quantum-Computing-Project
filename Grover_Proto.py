@@ -9,7 +9,7 @@ def Hadmard_product(A, n): # Tensor products between Hadmard gates
     return result
 
 A = (1 / np.sqrt(2)) *np.array([[1, 1], [1, -1]]) # Defines the Hadamard
-num_qubits = 3
+num_qubits = 4
 num_iterations = int(np.pi/4 * np.sqrt(2**num_qubits)) # Calculates the number of iterations
 target_in = 1  # Index grover is searching for
 
@@ -29,6 +29,8 @@ def oracle(state, target): # Oracle function flips the sign of the element we're
 
 
 diff = np.full((2**num_qubits, 2**num_qubits), 2/(2**num_qubits)) - np.eye(2**num_qubits) # Creates the diffuser matrix
+print(diff)
+
 def diffuser(state):
     state = tensor_product(A,state) #Inital Hadamard gate
 
