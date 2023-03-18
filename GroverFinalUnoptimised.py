@@ -21,6 +21,7 @@ gates. However the MC^n Z gate had to be hard coded as it is too complex to make
 
 import numpy as np
 import time
+import matplotlib.pyplot as plt
 
 
 class Sparse_Class:
@@ -372,6 +373,9 @@ class Grovers_Circuit(object):
         probabilities = self.state*self.state
         print(probabilities) 
         print("Most probable state is: ", np.argmax(probabilities), "with probability: ", np.max(probabilities))
+        plt.ylabel('Probability of Measuring the State')
+        plt.xlabel('The State')
+        plt.show()
 
     #method that runs Grover's Algorithm with sparse
     def sparse_circuit(self):
@@ -393,6 +397,10 @@ class Grovers_Circuit(object):
         probabilities = self.state*self.state
         print(probabilities) 
         print("Most probable state is: ", np.argmax(probabilities), "with probability: ", np.max(probabilities))
+        plt.bar(np.arange(2**self.N), probabilities)
+        plt.ylabel('Probability of Measuring the State')
+        plt.xlabel('The State')
+        plt.show()
     
 
 """Class to run the above code"""
@@ -419,6 +427,7 @@ class Grover_Test(object):
         print('Time taken with Sparse: ',t2 - t1)    
 
 
-n = 8
-test = Grover_Test().run(n, 4, Gate_Class(n), Sparse_Class)
+n = 4
+#test = Grover_Test().run(n, 4, Gate_Class(n), Sparse_Class)
 test = Grover_Test().run_sparse(n, 4, Gate_Class(n), Sparse_Class)
+
