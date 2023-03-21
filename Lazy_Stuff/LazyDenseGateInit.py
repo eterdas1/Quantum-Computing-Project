@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod #used to implement the functionality of Interfaces
 import itertools #useful for manipulating/creating iterables
+from typing import Generator #allows for type hinting of generator returns
 
 #defines a MatrixElement object i.e. what goes in each entry of a matrix
 class MatrixElement:
@@ -18,22 +19,22 @@ class ISquareMatrix(ABC):
     #the same dimension.
     @property
     @abstractmethod
-    def dim(self):
+    def dim(self) -> int:
         pass
 
     #dunder which implements square bracket indexing
     @abstractmethod
-    def __getitem__(self, index):
+    def __getitem__(self, indices: tuple(int)) -> int:
         pass
 
     #when implemented, should make any object of this type
     #an iterable of MatrixElement objects
     @abstractmethod
-    def __iter__(self) -> MatrixElement:
+    def __iter__(self) -> Generator[MatrixElement, None, None]:
         pass
     
     #overloading dunder to allow for useful print statements
-    def __str__(self):
+    def __str__(self) -> None:
         matrix_str = ""
         for i in self:
             matrix_str += "Matrix Element [{}, {}] has value {}\n".format(i.row, i.col, i.val)
@@ -55,6 +56,9 @@ class ISquareMatrix(ABC):
     # def tensorProduct():
     #     pass
 
+    #def apply():
+    #     pass
+
 #Interface defining Quantum gates
 class IGate(ISquareMatrix):
 
@@ -62,7 +66,7 @@ class IGate(ISquareMatrix):
     #code not repeated
 
     #implements super's abstract method for indexing
-    def __getitem__(self, indices):
+    def __getitem__(self, indices: tuple(int)) -> int:
         row, col = indices
 
         #checks if indices are valid
@@ -77,26 +81,26 @@ class IGate(ISquareMatrix):
 class ISingleQubitGate(IGate):
     #by definition these have dimension=2
     @property
-    def dim(self):
+    def dim(self) -> int:
         return 2
 
 #Interface defining Two Qubit Quantum gates
 class TwoQubitGate(IGate):
     #by definition these have dimension=4
     @property
-    def dim(self):
+    def dim(self) -> int:
         return 4
     
 #Interface defining Quantum gates with an arbitrary number of Qubits
 class INQubitGate(IGate):
-    def __init__(self, NumQbits):
+    def __init__(self, NumQbits: int) -> None:
         self.NumQbits = NumQbits
 
 #Class defining Hadamard Gate Object
 class Hadamard(ISingleQubitGate):
 
     #generates its MatrixElements as per the gate's definition
-    def __iter__(self):
+    def __iter__(self) -> Generator[MatrixElement, None, None]:
         yield MatrixElement(0,0,1)
         yield MatrixElement(0,1,1)
         yield MatrixElement(1,0,1)
@@ -106,7 +110,7 @@ class Hadamard(ISingleQubitGate):
 class X(ISingleQubitGate):  
 
     #generates its MatrixElements as per the gate's definition 
-    def __iter__(self):
+    def __iter__(self) -> Generator[MatrixElement, None, None]:
         yield MatrixElement(0,0,0)
         yield MatrixElement(0,1,1)
         yield MatrixElement(1,0,0)
@@ -115,11 +119,11 @@ class X(ISingleQubitGate):
 #Class defining Multo-Controlled Pauli Z Gate Object
 class MCZ(INQubitGate):
     @property
-    def dim(self):
+    def dim(self) -> int:
         return 2**self.NumQbits
 
     #generates its MatrixElements as per the gate's definition
-    def __iter__(self):
+    def __iter__(self) -> Generator[MatrixElement, None, None]:
         for r in range(self.dim):
             for c in range(self.dim):
                 if r == c:
@@ -133,11 +137,11 @@ class MCZ(INQubitGate):
 #Class defining Indentity Gate Object
 class I(INQubitGate):
     @property
-    def dim(self):
+    def dim(self) -> int:
         return self.NumQbits
 
     #generates its MatrixElements as per the gate's definition
-    def __iter__(self):
+    def __iter__(self) -> Generator[MatrixElement, None, None]:
         for r in range(self.dim):
                 for c in range(self.dim):
                     if r == c:
