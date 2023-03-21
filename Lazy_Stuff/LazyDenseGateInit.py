@@ -24,7 +24,7 @@ class ISquareMatrix(ABC):
 
     #dunder which implements square bracket indexing
     @abstractmethod
-    def __getitem__(self, indices: tuple(int)) -> int:
+    def __getitem__(self, indices: tuple[int,int]) -> int:
         pass
 
     #when implemented, should make any object of this type
@@ -66,7 +66,7 @@ class IGate(ISquareMatrix):
     #code not repeated
 
     #implements super's abstract method for indexing
-    def __getitem__(self, indices: tuple(int)) -> int:
+    def __getitem__(self, indices: tuple[int,int]) -> int:
         row, col = indices
 
         #checks if indices are valid
