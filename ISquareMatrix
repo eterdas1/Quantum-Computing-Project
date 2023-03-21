@@ -1,0 +1,68 @@
+from abc import ABC, abstractmethod #used to implement the functionality of Interfaces
+import numpy as np
+
+#defines a MatrixElement object i.e. what goes in each entry of a matrix
+class MatrixElement():
+    def __init__(self, row: int, col: int, val: complex):
+        self.row = row 
+        self.col = col
+        self.val = val
+
+#default implementation of generator which creates and yields values one at a time (lazily)
+#defined standalone as per best practice
+def generate_MatrixElements(dim): #argument dim specifies dimension of array
+        r = 0 #row index
+        c = 0 #col index
+        v = None #element value, None specified rather than complex() since python automatically performs type casting and None will flag errors easily
+
+        for r in range(dim):
+            for c in range(dim):
+                yield MatrixElement(r,c,v) #yields a MatrixElement (returns it to the caller whilst pausing the method)
+
+#Interface defining a Square Matrix
+class ISquareMatrix(ABC):
+    def __init__(self, dimension: int) -> None:
+        self.dimension = dimension
+
+    @property #this decorator is used to define getters and setters later, allowing encapsulated data to be accessed
+    @abstractmethod #forces implementations of this interface to implement this method
+    def indexval():
+        pass #this keyword lets you skip defining the method
+
+    @indexval.getter
+    def get_indexval():
+        pass
+
+    @indexval.setter
+    def set_indexval():
+        pass
+
+    @abstractmethod
+    def tensor_product(self, x, y):
+        pass
+
+    @abstractmethod
+    def Multiply(m):
+        pass
+
+    def Apply():
+        pass
+
+    def __mul__(self, other):
+        pass
+
+
+#commented out code had gen inside the class but this contradicts best practice
+    # def gen(dim):
+    #     r = 0
+    #     c = 0
+    #     v = None
+
+    #     for r in range(dim):
+    #         for c in range(dim):
+    #             yield MatrixElement(r,c,v)
+
+# for i in ISquareMatrix.gen(3):
+
+for i in generate_MatrixElements(3):
+    print("Matrix Element [{}, {}] has value {}".format(i.row, i.col, i.val))
