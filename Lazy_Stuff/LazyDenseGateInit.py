@@ -116,7 +116,7 @@ class X(ISingleQubitGate):
         yield MatrixElement(1,0,0)
         yield MatrixElement(1,1,1)
 
-#Class defining Multo-Controlled Pauli Z Gate Object
+#Class defining Multi-Controlled Pauli Z Gate Object
 class MCZ(INQubitGate):
     @property
     def dim(self) -> int:
